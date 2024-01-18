@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS purchase CASCADE;
+DROP TABLE IF EXISTS account CASCADE;
+
+CREATE TABLE IF NOT EXISTS purchase (
+    id SERIAL PRIMARY KEY,
+    product varchar(64) NOT NULL,
+    price BIGINT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS account (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    amount BIGINT NOT NULL
+);

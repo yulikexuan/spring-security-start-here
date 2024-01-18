@@ -1,5 +1,6 @@
 package ssia;
 
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MainTests {
+public class Ch02ApplicationTests {
 
     @Autowired
     private MockMvc mvc;
@@ -44,4 +46,5 @@ public class MainTests {
                 .andExpect(content().string("Hello!"))
                 .andExpect(status().isOk());
     }
+
 }
