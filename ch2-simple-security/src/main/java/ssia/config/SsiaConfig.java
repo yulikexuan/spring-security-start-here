@@ -28,12 +28,8 @@ class SsiaConfig {
     }
 
     @Bean
-    UserDetailsService userDetailsService(UserDetails user) {
-
-        var userDetailsManager = new InMemoryUserDetailsManager();
-        userDetailsManager.createUser(user);
-
-        return userDetailsManager;
+    public UserDetailsService userDetailsService(UserDetails user) {
+        return new InMemoryUserDetailsManager(user);
     }
 
     @Bean
