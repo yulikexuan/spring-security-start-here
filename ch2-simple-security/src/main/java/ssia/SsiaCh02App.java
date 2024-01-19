@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class Ch02Application {
+public class SsiaCh02App {
 
     public static void main(String[] args) {
-        SpringApplication.run(Ch02Application.class, args);
+        SpringApplication.run(SsiaCh02App.class, args);
     }
 
 }
