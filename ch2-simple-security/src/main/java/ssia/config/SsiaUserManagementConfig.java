@@ -6,26 +6,30 @@ package ssia.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ssia.domain.model.User;
-import ssia.service.InMemoryUserDetailsService;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import ssia.repository.UserQueries;
 
-import java.util.List;
+import javax.sql.DataSource;
 
 
 @Configuration
 class SsiaUserManagementConfig {
 
-    static final List<UserDetails> USERS = List.of(
-            User.of("yul", "yul", "READ"),
-            User.of("joel", "joel", "READ_AND_WRITE"));
-
     @Bean
-    public UserDetailsService userDetailsService() {
-        return InMemoryUserDetailsService.of(USERS);
+    public UserDetailsService userDetailsService(final DataSource dataSource) {
+
+        var userDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+        userDetailsManager.setUsersByUsernameQuery(
+                UserQueries.SQL_FIND_USER_BY_USERNAME);
+
+        userDetailsManager.setAuthoritiesByUsernameQuery(
+                UserQueries.SQL_FIND_AUTHORITY_BY_USERNAME);
+
+        return userDetailsManager;
     }
 
     @Bean

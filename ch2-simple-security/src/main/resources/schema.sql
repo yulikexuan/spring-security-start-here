@@ -1,14 +1,15 @@
-DROP TABLE IF EXISTS purchase CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS account CASCADE;
 
-CREATE TABLE IF NOT EXISTS purchase (
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    product varchar(64) NOT NULL,
-    price BIGINT NOT NULL
+    username VARCHAR(45) NOT NULL,
+    password VARCHAR(45) NOT NULL,
+    enabled BOOLEAN NOT NULL,
+    CONSTRAINT username_unique UNIQUE (username)
 );
 
-CREATE TABLE IF NOT EXISTS account (
+CREATE TABLE IF NOT EXISTS authorities (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    amount BIGINT NOT NULL
-);
+    username VARCHAR(45) NOT NULL,
+    authority VARCHAR(45) NOT NULL);
