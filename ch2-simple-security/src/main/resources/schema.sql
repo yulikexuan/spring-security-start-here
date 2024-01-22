@@ -1,15 +1,15 @@
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS account CASCADE;
+DROP TABLE IF EXISTS authorities CASCADE;
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(45) NOT NULL,
-    password VARCHAR(45) NOT NULL,
-    enabled BOOLEAN NOT NULL,
-    CONSTRAINT username_unique UNIQUE (username)
+    name VARCHAR(45) NOT NULL,
+    pw VARCHAR(45) NOT NULL,
+    active BOOLEAN NOT NULL,
+    CONSTRAINT username_unique UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS authorities (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(45) NOT NULL,
-    authority VARCHAR(45) NOT NULL);
+    name VARCHAR(45) NOT NULL,
+    auth VARCHAR(45) NOT NULL);
