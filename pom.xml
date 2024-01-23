@@ -125,6 +125,7 @@
     </build>
 
     <modules>
+        <module>spring-crypto</module>
         <module>simple-security</module>
     </modules>
 
