@@ -13,9 +13,9 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>ch2-simple-security</artifactId>
+    <artifactId>simple-security</artifactId>
 
-    <name>ch2-simple-security</name>
+    <name>simple-security</name>
     <description>Simple Spring Security Example</description>
 
     <dependencies>
