@@ -1,4 +1,4 @@
-package ssia.controllers;
+package ssia.web.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

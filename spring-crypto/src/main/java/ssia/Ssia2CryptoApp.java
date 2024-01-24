@@ -1,3 +1,6 @@
+//: ssia.Ssia2CryptoApp.java
+
+
 package ssia;
 
 
@@ -6,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class SsiaCh03App {
+public class Ssia2CryptoApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(SsiaCh03App.class, args);
+        SpringApplication.run(Ssia2CryptoApp.class, args);
     }
 
-}
+}///:~

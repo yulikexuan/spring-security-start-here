@@ -4,25 +4,56 @@
 package ssia.config;
 
 
+import jakarta.servlet.Filter;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import ssia.web.filter.AuthenticationLoggingFilter;
+import ssia.web.filter.RequestValidationFilter;
 
 
+@Slf4j
 @Configuration
 class SsiaWebAuthorizationConfig {
 
+    @Value("${ssia.request.header.name}")
+    private String headerName;
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    Filter requestValidationFilter() {
+        return RequestValidationFilter.of(headerName);
+    }
 
-        http.httpBasic();
-        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+    @Bean
+    Filter authenticationLoggingFilter() {
+        return AuthenticationLoggingFilter.of(headerName);
+    }
 
-        // Makes all the endpoints accessible without the need for credentials
-        // http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+    @Bean
+    public SecurityFilterChain filterChain(
+            @NonNull final HttpSecurity http,
+            @NonNull final Filter requestValidationFilter,
+            @NonNull final Filter authenticationLoggingFilter)
+            throws Exception {
 
-        return http.build();
+        http.httpBasic(Customizer.withDefaults());
+
+        http.addFilterBefore(requestValidationFilter, BasicAuthenticationFilter.class)
+                .addFilterAfter(authenticationLoggingFilter, BasicAuthenticationFilter.class)
+                .authorizeHttpRequests(c -> c.anyRequest().authenticated());
+
+        var filterChain = http.build();
+
+        filterChain.getFilters().forEach(
+                f -> log.info(">>> Filter : {}", f.getClass().getSimpleName()));
+
+        return filterChain;
     }
 
 }///:~
