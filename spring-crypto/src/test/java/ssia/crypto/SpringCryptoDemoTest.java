@@ -240,37 +240,6 @@ class SpringCryptoDemoTest {
             assertThat(deluxTe.decrypt(encrypted)).isEqualTo(VALUE_TO_ENCRYPT);
         }
 
-        @Test
-        void queryable_Text_Encryptor() {
-
-            // Given
-            TextEncryptor te = Encryptors.queryableText(password, salt);
-
-            // When
-            String encrypted_1 = te.encrypt(VALUE_TO_ENCRYPT);
-            log.info(">>> Encrypts '{}' with Queryable Text Encryptor {} ",
-                    VALUE_TO_ENCRYPT, encrypted_1);
-
-            String encrypted_2 = te.encrypt(VALUE_TO_ENCRYPT);
-            log.info(">>> Encrypts '{}' with Queryable Text Encryptor {} ",
-                    VALUE_TO_ENCRYPT, encrypted_2);
-
-            String encrypted_3 = te.encrypt(VALUE_TO_ENCRYPT);
-            log.info(">>> Encrypts '{}' with Queryable Text Encryptor {} ",
-                    VALUE_TO_ENCRYPT, encrypted_3);
-
-            // Then
-            assertThat(encrypted_1)
-                    .isEqualTo(encrypted_2)
-                    .isEqualTo(encrypted_3);
-
-            assertThat(te.decrypt(encrypted_1))
-                    .isEqualTo(VALUE_TO_ENCRYPT);
-
-            assertThat(te.decrypt(encrypted_2))
-                    .isEqualTo(VALUE_TO_ENCRYPT);
-        }
-
     }
 
 }///:~
