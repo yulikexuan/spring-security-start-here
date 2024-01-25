@@ -12,36 +12,34 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 
 @Slf4j
 @RequiredArgsConstructor(staticName = "of")
-public class RequestValidationFilter implements Filter {
+public class RequestValidationFilter extends OncePerRequestFilter {
 
     private final String headerName;
 
     @Override
-    public void doFilter(
-            @NonNull final ServletRequest servletRequest,
-            @NonNull final ServletResponse servletResponse,
-            @NonNull final FilterChain filterChain)
-            throws IOException, ServletException {
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
+            throws ServletException, IOException {
 
-        var httpReq = (HttpServletRequest) servletRequest;
-        var httpResp = (HttpServletResponse) servletResponse;
-
-        String requestId = httpReq.getHeader(headerName);
+        String requestId = request.getHeader(headerName);
 
         if (StringUtils.isBlank(requestId)) {
             log.error(">>> No Correct Header Set Up");
-            httpResp.setStatus(HttpStatus.BAD_REQUEST.value());
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
             return;
         } else {
             log.info(">>> Will Authenticate Request with Request-Id : {}",
                     requestId);
-            filterChain.doFilter(servletRequest, servletResponse);
+            filterChain.doFilter(request, response);
         }
 
     }
