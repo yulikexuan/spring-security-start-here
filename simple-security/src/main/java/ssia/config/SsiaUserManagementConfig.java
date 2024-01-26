@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@ComponentScan(basePackages = {"ssia.web.controller", "ssia.web.filter"})
+@ComponentScan(basePackages = {"ssia.security", "ssia.web.controller", "ssia.web.filter"})
 class SsiaUserManagementConfig {
 
     @Bean

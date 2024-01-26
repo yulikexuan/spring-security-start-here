@@ -12,7 +12,7 @@
     </appender>
 
     <logger name="org.springframework" level="info" />
-    <logger name="ssia" level="info" />
+    <logger name="ssia" level="debug" />
     <logger name="org.jline" level="error" />
 
     <root level="info">
