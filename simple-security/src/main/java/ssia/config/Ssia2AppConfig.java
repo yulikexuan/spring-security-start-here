@@ -19,6 +19,12 @@ class Ssia2AppConfig {
 
     @Bean
     InitializingBean initializingBean() {
+
+        /*
+         * This mode can not only copy security contest to Spring managed threads,
+         * but also self-managed (app managed) threads
+         * Seems, DelegatingSecurityContextCallable is not needed anymore
+         */
         return () -> setStrategyName(MODE_INHERITABLETHREADLOCAL);
     }
 

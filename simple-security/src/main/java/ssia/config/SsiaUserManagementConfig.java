@@ -5,7 +5,6 @@ package ssia.config;
 
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -17,7 +16,6 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@ComponentScan(basePackages = {"ssia.security", "ssia.web.controller", "ssia.web.filter"})
 class SsiaUserManagementConfig {
 
     @Bean
