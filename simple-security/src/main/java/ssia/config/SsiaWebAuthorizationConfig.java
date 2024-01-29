@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 
@@ -18,12 +19,17 @@ import org.springframework.security.web.SecurityFilterChain;
 class SsiaWebAuthorizationConfig {
 
     @Bean
+    Customizer<HttpBasicConfigurer<HttpSecurity>> httpBasicConfigurer() {
+        return new HttpRealmCustomizer();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(
-            @NonNull final HttpSecurity http)
+            @NonNull final HttpSecurity http,
+            Customizer<HttpBasicConfigurer<HttpSecurity>> httpBasicConfigurer)
             throws Exception {
 
-        http.httpBasic(Customizer.withDefaults())
-                // .authenticationProvider(authenticationProvider)
+        http.httpBasic(httpBasicConfigurer)
                 .authorizeHttpRequests(c -> c.anyRequest().authenticated());
 
         var filterChain = http.build();

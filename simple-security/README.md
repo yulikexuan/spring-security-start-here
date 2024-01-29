@@ -18,3 +18,6 @@
 ### Concurrency Support of Spring Security 6 
 - Running on `SecurityContextHolder.MODE_INHERITABLETHREADLOCAL` 
 - ` DelegatingSecurityContextCallable ` & ` DelegatingSecurityContextCallable<V>` not Needed
+
+### To Verify Changes to Customize Basic Authentication
+- ` curl  -v -w '\nStatus: %{http_code}\nTotal: %{time_total} s\n' GET -H "Content-Type: application/json" -u yul2:yul2 http://localhost:7070/greeting/hello `
