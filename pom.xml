@@ -127,6 +127,7 @@
     <modules>
         <module>spring-crypto</module>
         <module>simple-security</module>
+        <module>form-based-login</module>
     </modules>
 
 </project>
