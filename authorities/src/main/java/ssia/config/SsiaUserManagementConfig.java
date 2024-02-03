@@ -23,16 +23,19 @@ class SsiaUserManagementConfig {
 
         userDetailsManager.createUser(User.withUsername("yul")
                 .password("yul")
-                .authorities("READ", "WRITE", "DELETE")
+                // .authorities("ROLE_ADMIN")
+                .roles("ADMIN")
                 .build());
 
         userDetailsManager.createUser(User.withUsername("joel")
                 .password("joel")
-                .authorities("READ", "WRITE")
+                // .authorities("ROLE_EMPLOYEE")
+                .roles("EMPLOYEE")
                 .build());
         userDetailsManager.createUser(User.withUsername("zac")
                 .password("zac")
-                .authorities("READ")
+                // .authorities("ROLE_EMPLOYEE")
+                .roles("EMPLOYEE")
                 .build());
 
         return userDetailsManager;

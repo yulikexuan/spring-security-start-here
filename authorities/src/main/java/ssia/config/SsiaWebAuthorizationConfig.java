@@ -8,49 +8,35 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authorization.AuthorizationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
-import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
 
 @Slf4j
 @Configuration
 class SsiaWebAuthorizationConfig {
 
-    static final String AUTHORITIES = """
-            hasAuthority('READ') && !hasAuthority('WRITE')
+    static final String AUTHORIZATION_EXPRESSION = """
+            T(java.time.LocalTime).now().isBefore(T(java.time.LocalTime).of(12, 0))
             """;
 
     @Bean
-    AuthorizationManager<RequestAuthorizationContext> authorizationManager() {
-        return new WebExpressionAuthorizationManager(AUTHORITIES);
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(
-            @NonNull final HttpSecurity http,
-            AuthorizationManager<RequestAuthorizationContext> authorizationManager)
+    public SecurityFilterChain filterChain(@NonNull final HttpSecurity http)
             throws Exception {
 
-//        Simple Solutions :
-//
 //        http.httpBasic(Customizer.withDefaults())
 //                .authorizeHttpRequests(c -> c.anyRequest()
-//                        .hasAuthority("write"));
-//                        // .hasAnyAuthority("write", "read"));
-//
-//        http.httpBasic(Customizer.withDefaults())
-//                .authorizeHttpRequests(c -> c.anyRequest()
-//                        // .hasAuthority("write"));
-//                        .hasAnyAuthority("write", "read"));
+//                        .hasRole("ADMIN"));
 
-        // Powerful Solution
-        http.httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(c -> c.anyRequest()
-                        .access(authorizationManager));
+//        http.httpBasic(Customizer.withDefaults())
+//                .authorizeHttpRequests(c -> c.anyRequest().hasAnyRole(
+//                        "ADMIN", "EMPLOYEE"));
+
+        http.authorizeHttpRequests(
+                c -> c.anyRequest().access(new WebExpressionAuthorizationManager(
+                        AUTHORIZATION_EXPRESSION))
+        );
 
         var filterChain = http.build();
 
