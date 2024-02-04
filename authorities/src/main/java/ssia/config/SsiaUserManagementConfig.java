@@ -30,8 +30,9 @@ class SsiaUserManagementConfig {
         userDetailsManager.createUser(User.withUsername("joel")
                 .password("joel")
                 // .authorities("ROLE_EMPLOYEE")
-                .roles("EMPLOYEE")
+                .roles("MANAGER")
                 .build());
+
         userDetailsManager.createUser(User.withUsername("zac")
                 .password("zac")
                 // .authorities("ROLE_EMPLOYEE")
