@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestingHttpRequestMatchersController {
 
-    @PostMapping("/a")
-    public String postEndpointA() {
-        return ">>> POST /a Works! ";
-    }
-
     @GetMapping("/a")
     public String getEndpointA() {
         return ">>> GET /a Works! ";
@@ -30,6 +25,16 @@ public class TestingHttpRequestMatchersController {
     @GetMapping("/a/b/c")
     public String getEnpointABC() {
         return ">>> GET /a/b/c Works! ";
+    }
+
+    @GetMapping("/a/b/c/d")
+    public String getEnpointABCD() {
+        return ">>> GET /a/b/c Works! ";
+    }
+
+    @PostMapping("/a")
+    public String postEndpointA() {
+        return ">>> POST /a Works! ";
     }
 
     @PutMapping("/a")

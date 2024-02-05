@@ -12,9 +12,13 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import java.util.List;
+
 
 @Configuration
 class SsiaUserManagementConfig {
+
+    static final List<String> ALL_ROLES = List.of("MANAGER", "ADMIN", "EMPLOYEE");
 
     @Bean
     public UserDetailsService userDetailsService() {
