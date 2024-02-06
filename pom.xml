@@ -129,6 +129,7 @@
         <module>simple-security</module>
         <module>form-based-login</module>
         <module>authorities</module>
+        <module>csrf</module>
     </modules>
 
 </project>
