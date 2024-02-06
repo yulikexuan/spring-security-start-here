@@ -125,11 +125,12 @@
     </build>
 
     <modules>
-        <module>spring-crypto</module>
         <module>simple-security</module>
         <module>form-based-login</module>
         <module>authorities</module>
-        <module>csrf</module>
+        <module>csrf-token</module>
+        <module>csrf-form</module>
+        <module>spring-crypto</module>
     </modules>
 
 </project>

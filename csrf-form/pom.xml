@@ -13,11 +13,11 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>csrf</artifactId>
+    <artifactId>csrf-form</artifactId>
 
-    <name>csrf</name>
+    <name>csrf-form</name>
     <description>
-        CSRF Protection
+        Presents a login form based on CSRF Token
     </description>
 
     <dependencies>
@@ -26,6 +26,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <dependency>
