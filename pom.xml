@@ -131,6 +131,7 @@
         <module>csrf-token</module>
         <module>csrf-form</module>
         <module>csrf-customize</module>
+        <module>cors-config</module>
         <module>spring-crypto</module>
     </modules>
 

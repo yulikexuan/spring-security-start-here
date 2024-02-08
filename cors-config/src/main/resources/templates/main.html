@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Testing CORS Configuration</title>
+    <style>
+        .main {
+            font-family: 'Google Symbols',monospace;
+            background-color: #22292F;
+        }
+        .center {
+            color: #9ACD32;
+            text-align: center;
+            margin: 1em;
+        }
+    </style>
+    <script>
+        const http = new XMLHttpRequest();
+        const url='http://127.0.0.1:7070/test';
+        http.open("POST", url);
+        http.setRequestHeader("Authorization", "Basic " + btoa("yul" + ":" + "yul"))
+        http.send();
+        http.onreadystatechange = (e) => {
+            var rt = http.responseText;
+            if (rt.length === 0) {
+                document.getElementById("test_output").innerHTML = "CORS NOT PERMITTED HERE !";
+            } else {
+                document.getElementById("test_output").innerHTML = rt;
+            }
+        }
+
+        const cors_http = new XMLHttpRequest();
+        const cors_url="http://127.0.0.1:7070/cors/test";
+        cors_http.open("POST", cors_url);
+        cors_http.setRequestHeader("Authorization", "Basic " + btoa("yul" + ":" + "yul"))
+        cors_http.send();
+        cors_http.onreadystatechange = (e) => {
+            document.getElementById("cors_output").innerHTML = cors_http.responseText;}
+    </script>
+</head>
+<body class="main">
+    <div class="center">
+        <h3 id="test_output" style="color:#FF0000"></h3>
+    </div>
+    <div class="center">
+        <h3 id="cors_output"></h3>
+    </div>
+</body>
+</html>
