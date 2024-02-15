@@ -134,6 +134,7 @@
         <module>cors-config</module>
         <module>method-security</module>
         <module>method-security-permission</module>
+        <module>method-parameters-filtering</module>
         <module>spring-crypto</module>
     </modules>
 
