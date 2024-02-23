@@ -136,6 +136,9 @@
         <module>method-security-permission</module>
         <module>method-parameters-filtering</module>
         <module>repository-filtering</module>
+        <module>oauth2-challenge-verifier</module>
+        <module>oauth2-auth-srv</module>
+        <module>oauth2-resource-srv</module>
         <module>spring-crypto</module>
     </modules>
 
