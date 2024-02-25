@@ -25,17 +25,23 @@ class RegisteredClients {
 
     static final String RESOURCE_SERVER_REGISTRATION_ID = UUID.randomUUID().toString();
 
+    static final String OAUTH2_CLIENT_REGISTRATION_ID = UUID.randomUUID().toString();
+
     static final String CLIENT_ID = "client";
 
     static final String CLIENT_YUL_ID = "client_yul";
 
     static final String RESOURCE_SERVER_ID = "resource_server";
 
+    static final String OAUTH2_CLIENT_ID = "oauth2_client";
+
     static final String CLIENT_SECRET = "secret";
 
     static final String CLIENT_YUL_SECRET = "yul_secret";
 
     static final String RESOURCE_SERVER_SECRET = "resource_server_secret";
+
+    static final String OAUTH2_CLIENT__SECRET = "oauth2_client_secret";
 
     static final String MANNING_REDIRECT_URI = "https://www.manning.com/authorized";
 
@@ -119,7 +125,19 @@ class RegisteredClients {
                         .authorizationGrantType(CLIENT_CREDENTIALS)
                         .build();
 
-        return List.of(registeredClient, registeredClientYul, resourceServer);
+        final var oauth2Client =
+                RegisteredClient.withId(OAUTH2_CLIENT_REGISTRATION_ID)
+                        .clientId(OAUTH2_CLIENT_ID)
+                        .clientSecret(OAUTH2_CLIENT__SECRET)
+                        .clientAuthenticationMethod(CLIENT_SECRET_BASIC)
+                        .authorizationGrantType(CLIENT_CREDENTIALS)
+                        .scope(OPENID)
+                        .build();
+
+        return List.of(registeredClient,
+                registeredClientYul,
+                resourceServer,
+                oauth2Client);
     }
 
 }///:~
