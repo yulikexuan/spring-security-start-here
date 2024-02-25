@@ -42,3 +42,89 @@
 
 
 ### Using Customized JWT Tokens
+
+1. Change the Authorization Server to Add the Custom Claim to the Access Token
+   ``` 
+   class Ssia2JwtTokenCustomizer implements OAuth2TokenCustomizer<JwtEncodingContext> {
+   
+       @Override
+       public void customize(JwtEncodingContext jwtEncodingContext) {
+   
+           final OAuth2TokenType tokenType = jwtEncodingContext.getTokenType();
+           final JwtClaimsSet.Builder claimsBuilder = jwtEncodingContext.getClaims();
+   
+           if (ACCESS_TOKEN.equals(tokenType)) {
+   
+               final var authorities = jwtEncodingContext.getPrincipal()
+                       .getAuthorities();
+   
+               final var roles = AuthorityUtils.authorityListToSet(authorities)
+                       .stream()
+                       .map(a -> a.replaceFirst("^ROLE_", ""))
+                       .collect(ImmutableSet.toImmutableSet());
+   
+               claimsBuilder.claims(claims -> {
+                   claims.put("roles", roles);
+                   claims.put("priority", "HIGH");
+               });
+           }
+       }
+   }
+   ```
+
+2. Change the Resource Server to read the Custom Claim, 
+   - and store it in the security context 
+
+3. Implement an Authorization Rule that uses the Custom Claim
+
+
+### Configuring Token Validation through Introspection
+
+> #### Spring Security only Supports JWTs or Opaque Tokens NOT Both At the Same Time
+
+1. Make Sure that the Authorization Server Recognizes the Resource Server As a Client 
+   - The Resource Server Needs Client Credentials Registered on the Authorization Server Side
+   ``` 
+     // we now have a set of credentials on authorizatoin server that 
+     //   our resource server can use to call the introspection endpoint 
+     //   that the authorization server exposes
+     static List<RegisteredClient> registeredClients(
+         @NonNull final TokenSettings tokenSettings) {
+
+        final var registeredClient = ... ;
+
+        final var resourceServer =
+             RegisteredClient.withId(RESOURCE_SERVER_REGISTRATION_ID)
+                     .clientId(RESOURCE_SERVER_ID)
+                     .clientSecret(RESOURCE_SERVER_SECRET)
+                     .clientAuthenticationMethod(CLIENT_SECRET_BASIC)
+                     .authorizationGrantType(CLIENT_CREDENTIALS)
+                     .build();
+
+         return List.of(registeredClient, resourceServer);
+     } 
+   ```
+
+2. Configure Authentication on the Resource Server Side to Use Introspection
+   - The three essential values needed for introspection
+     - The introspection URI that the authorization server exposes allows 
+       the resource server to validate tokens
+     - The resource server client ID allows the resource server to identify 
+       itself when calling the introspection endpoint
+     - The resource server client secret that the resource server uses together 
+       with its client ID to authenticate when sending requests to the 
+       introspection endpoint
+     ``` 
+     server.port=7090
+     introspectionUri=http://localhost:8080/oauth2/introspect
+     resourceserver.clientID=resource_server
+     resourceserver.secret=resource_server_secret
+     ```
+
+3. Obtain an Access Token from the Authorization Server
+
+4. Use a Demo Endpoint to Prove that the Configuration Works the Way we Expect 
+   - with the Access Token we got in Step 3
+
+
+### Implementing Multi-Tenant Systems

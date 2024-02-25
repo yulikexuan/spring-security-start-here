@@ -22,21 +22,13 @@ class SsiaWebAuthorizationConfig {
     public SecurityFilterChain filterChain(
             @NonNull final HttpSecurity http) throws Exception {
 
-        http.httpBasic(Customizer.withDefaults())
+        return http.httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(c -> c
                         .requestMatchers(HttpMethod.GET, "/codes/challenge")
                         .hasRole("ADMIN")
                         .anyRequest()
                         .denyAll()
-                );
-
-
-        var filterChain = http.build();
-
-        filterChain.getFilters().forEach(
-                f -> log.info(">>> Filter : {}", f.getClass().getSimpleName()));
-
-        return filterChain;
+                ).build();
     }
 
 }///:~
