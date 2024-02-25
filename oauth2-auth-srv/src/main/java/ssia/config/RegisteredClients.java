@@ -21,15 +21,25 @@ class RegisteredClients {
 
     static final String CLIENT_REGISTRATION_ID = UUID.randomUUID().toString();
 
+    static final String CLIENT_YUL_REGISTRATION_ID = UUID.randomUUID().toString();
+
     static final String RESOURCE_SERVER_REGISTRATION_ID = UUID.randomUUID().toString();
 
     static final String CLIENT_ID = "client";
+
+    static final String CLIENT_YUL_ID = "client_yul";
 
     static final String RESOURCE_SERVER_ID = "resource_server";
 
     static final String CLIENT_SECRET = "secret";
 
+    static final String CLIENT_YUL_SECRET = "yul_secret";
+
     static final String RESOURCE_SERVER_SECRET = "resource_server_secret";
+
+    static final String MANNING_REDIRECT_URI = "https://www.manning.com/authorized";
+
+    static final String YUL_REDIRECT_URI = "http://localhost:8088/login/oauth2/code/yulauthorized";
 
     private RegisteredClients() {}
 
@@ -85,11 +95,21 @@ class RegisteredClients {
                         // the authorization code in case of the authorization code
                         // grant type
                         .tokenSettings(tokenSettings)
-                        .redirectUri("https://www.manning.com/authorized")
+                        .redirectUri(MANNING_REDIRECT_URI)
                         // A scope – Defines a purpose for the request of an access token
                         // The scope can be used later in authorization rules
                         .scope(OPENID)
                         .build();
+
+        final var registeredClientYul = RegisteredClient
+                .withId(CLIENT_YUL_REGISTRATION_ID)
+                .clientId(CLIENT_YUL_ID)
+                .clientSecret(CLIENT_YUL_SECRET)
+                .clientAuthenticationMethod(CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AUTHORIZATION_CODE)
+                .redirectUri(YUL_REDIRECT_URI)
+                .scope(OPENID)
+                .build();
 
         final var resourceServer =
                 RegisteredClient.withId(RESOURCE_SERVER_REGISTRATION_ID)
@@ -99,7 +119,7 @@ class RegisteredClients {
                         .authorizationGrantType(CLIENT_CREDENTIALS)
                         .build();
 
-        return List.of(registeredClient, resourceServer);
+        return List.of(registeredClient, registeredClientYul, resourceServer);
     }
 
 }///:~

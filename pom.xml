@@ -139,6 +139,7 @@
         <module>oauth2-challenge-verifier</module>
         <module>oauth2-auth-srv</module>
         <module>oauth2-resource-srv</module>
+        <module>oauth2-client-login</module>
         <module>spring-crypto</module>
     </modules>
 
